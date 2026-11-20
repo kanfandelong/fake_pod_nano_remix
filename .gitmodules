@@ -1,3 +1,3 @@
 [submodule "espaudiocore"]
 	path = espaudiocore
-	url = https://github.com/kanfandelong/espaudiocore.git
+	url = ../espaudiocore.git

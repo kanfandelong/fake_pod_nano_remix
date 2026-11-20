@@ -89,7 +89,10 @@ Linux / macOS：
 ### 2. 获取代码
 
 ```powershell
-git clone --recurse-submodules https://github.com/kanfandelong/fake_pod_nano_remix.git
+# 主推 SSH（espaudiocore 子模块用相对地址，会跟随父仓库协议）
+git clone --recurse-submodules git@github.com:kanfandelong/fake_pod_nano_remix.git
+# 没有配置 SSH key 时也可以用 HTTPS
+# git clone --recurse-submodules https://github.com/kanfandelong/fake_pod_nano_remix.git
 cd fake_pod_nano_remix
 ```
 
