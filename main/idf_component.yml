@@ -1,0 +1,15 @@
+dependencies:
+  idf:
+    version: ">=6.1.0"
+  lvgl/lvgl:
+    version: "9.4.*"
+    public: true
+  espressif/esp_lcd_co5300:
+    version: "2.0.*"
+    public: true
+  espressif/esp_lcd_touch:
+    version: "^1.2.0"
+    public: true
+  joltwallet/littlefs:
+    version: "^1.19.1"
+    public: true

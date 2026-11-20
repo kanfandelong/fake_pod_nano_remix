@@ -1,0 +1,3 @@
+[submodule "espaudiocore"]
+	path = espaudiocore
+	url = git@github.com:kanfandelong/espaudiocore.git

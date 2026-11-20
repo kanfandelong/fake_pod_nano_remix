@@ -1,0 +1,110 @@
+diff --git a/include/espaudiocore.h b/include/espaudiocore.h
+index 4c39c48..7e76a75 100644
+--- a/include/espaudiocore.h
++++ b/include/espaudiocore.h
+@@ -220,6 +220,17 @@ typedef struct {
+ esp_err_t espaudiocore_begin(const char *path, i2s_chan_handle_t tx, const espaudiocore_cfg_t *cfg,
+                              int *dec_err);
+ 
++/**
++ * @brief Parse a local file's container/metadata without starting playback.
++ *
++ * Metadata is reported synchronously through cfg->on_meta (same callback and
++ * lifetime rules as begin()). Useful for reading Title/Artist/Album/APIC
++ * before committing to playback. I2S is not started; tx is only used to
++ * construct the decoder sink and can be the normal playback handle.
++ */
++esp_err_t espaudiocore_probe(const char *path, i2s_chan_handle_t tx,
++                             const espaudiocore_cfg_t *cfg, int *dec_err);
++
+ /**
+  * @brief 打开本地文件，把**解码后的 PCM 写进 ringbuf**（不碰任何硬件）。
+  *
+diff --git a/include/private/audio_player.h b/include/private/audio_player.h
+index fb104cf..470cf5e 100644
+--- a/include/private/audio_player.h
++++ b/include/private/audio_player.h
+@@ -23,6 +23,10 @@
+ esp_err_t audio_player_start_file(const char *path, i2s_chan_handle_t tx, void *out_rb,
+                                   const espaudiocore_cfg_t *cfg, int *dec_err, bool i2s_output);
+ 
++/** Parse file metadata only; no decode task / no playback. */
++esp_err_t audio_player_probe_file(const char *path, i2s_chan_handle_t tx,
++                                  const espaudiocore_cfg_t *cfg, int *dec_err);
++
+ /** 从 ringbuf 起播（须显式指定格式，不做探测） */
+ esp_err_t audio_player_start_stream(RingbufHandle_t in, espaudiocore_format_t fmt,
+                                     i2s_chan_handle_t tx, void *out_rb,
+diff --git a/src/audio_player.cpp b/src/audio_player.cpp
+index 5e7b2d6..91485e0 100644
+--- a/src/audio_player.cpp
++++ b/src/audio_player.cpp
+@@ -484,6 +484,51 @@ esp_err_t audio_player_start_file(const char *path, i2s_chan_handle_t tx, void *
+     return player_begin(in, entry, tx, out_rb, cfg, dec_err, i2s_output);
+ }
+ 
++esp_err_t audio_player_probe_file(const char *path, i2s_chan_handle_t tx,
++                                  const espaudiocore_cfg_t *cfg, int *dec_err)
++{
++    if (dec_err) *dec_err = AUDIO_DEC_ERR_NONE;
++    if (!path || path[0] != '/') return ESP_ERR_INVALID_ARG;
++    if (s_ctx) return ESP_ERR_INVALID_STATE; /* stop playback first */
++
++    AudioInput *in = audio_source_fs_create(path);
++    if (!in) return ESP_ERR_NOT_FOUND;
++    const audio_decoder_entry_t *entry = audio_decoder_route(in, path);
++    if (!entry || !entry->create) {
++        delete in;
++        if (dec_err) *dec_err = AUDIO_DEC_ERR_OPEN;
++        return ESP_ERR_NOT_SUPPORTED;
++    }
++
++    PlayerCtx *c = new (std::nothrow) PlayerCtx();
++    if (!c) {
++        delete in;
++        return ESP_ERR_NO_MEM;
++    }
++    if (cfg) c->cfg = *cfg;
++    c->in = in;
++    c->duration_ms = -1;
++    c->dec = entry->create();
++    if (!c->dec) {
++        ctx_destroy(c);
++        if (dec_err) *dec_err = AUDIO_DEC_ERR_OPEN;
++        return ESP_ERR_NOT_SUPPORTED;
++    }
++    c->sink = audio_sink_i2s_create(tx, 0, c->cfg.output_bits);
++    if (!c->sink) {
++        ctx_destroy(c);
++        return ESP_ERR_INVALID_STATE;
++    }
++
++    audio_format_t fmt = {};
++    audio_err_t r = c->dec->open(c->in, c->sink, PlayerCtx::meta_trampoline,
++                                 c, &fmt, &c->duration_ms, &c->dec_err);
++    esp_err_t err = (r == AUDIO_OK) ? ESP_OK : audio_err_to_esp(r);
++    if (dec_err) *dec_err = c->dec_err;
++    ctx_destroy(c);
++    return err;
++}
++
+ esp_err_t audio_player_start_stream(RingbufHandle_t in_rb, espaudiocore_format_t fmt, i2s_chan_handle_t tx,
+                                     void *out_rb, const espaudiocore_cfg_t *cfg, int *dec_err,
+                                     bool i2s_output)
+diff --git a/src/espaudiocore.cpp b/src/espaudiocore.cpp
+index 33df911..3103f3c 100644
+--- a/src/espaudiocore.cpp
++++ b/src/espaudiocore.cpp
+@@ -21,6 +21,12 @@ esp_err_t espaudiocore_begin(const char *path, i2s_chan_handle_t tx, const espau
+     return audio_player_start_file(path, tx, nullptr, cfg, dec_err, /*i2s_output=*/true);
+ }
+ 
++esp_err_t espaudiocore_probe(const char *path, i2s_chan_handle_t tx,
++                             const espaudiocore_cfg_t *cfg, int *dec_err)
++{
++    return audio_player_probe_file(path, tx, cfg, dec_err);
++}
++
+ esp_err_t espaudiocore_begin_rb(const char *path, RingbufHandle_t out,
+                                 const espaudiocore_cfg_t *cfg, int *dec_err)
+ {

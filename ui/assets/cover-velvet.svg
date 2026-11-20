@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0.1" y1="0" x2="0.9" y2="1">
+      <stop offset="0" stop-color="#1A0911"/>
+      <stop offset="0.55" stop-color="#3D1024"/>
+      <stop offset="1" stop-color="#621B36"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#FF3C72" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#FF3C72" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="blur" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="34"/>
+    </filter>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.78" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer>
+        <feFuncA type="table" tableValues="0 0.3"/>
+      </feComponentTransfer>
+    </filter>
+  </defs>
+
+  <rect width="512" height="512" fill="url(#bg)"/>
+  <circle cx="356" cy="194" r="210" fill="url(#glow)"/>
+  <path d="M-20 424L532 120V512H-20Z" fill="#FF6F98" opacity="0.04"/>
+
+  <g fill="none" stroke-linecap="round">
+    <path d="M-28 188C58 126 122 292 208 220C284 156 360 132 540 204" stroke="#FF4D80" stroke-width="26" opacity="0.16" filter="url(#blur)"/>
+    <path d="M-28 188C58 126 122 292 208 220C284 156 360 132 540 204" stroke="#FF6893" stroke-width="4.5"/>
+    <path d="M-28 250C62 192 116 344 210 282C292 228 352 202 540 262" stroke="#FF9BB4" stroke-width="1.8" opacity="0.82"/>
+    <path d="M-28 318C72 258 132 398 222 346C300 300 370 282 540 326" stroke="#FF487E" stroke-width="2.5" opacity="0.62"/>
+    <path d="M-28 360C74 314 142 442 232 394C308 352 388 334 540 372" stroke="#FFC1D2" stroke-width="1" opacity="0.55"/>
+    <path d="M-28 412C86 378 138 474 252 438C338 410 414 400 540 432" stroke="#FF6F98" stroke-width="1.2" opacity="0.38"/>
+  </g>
+
+  <g fill="#FFD9E2">
+    <circle cx="390" cy="92" r="4.5"/>
+    <circle cx="116" cy="88" r="2"/>
+    <circle cx="456" cy="332" r="2.5" opacity="0.7"/>
+  </g>
+  <g stroke="#FFD9E2" stroke-width="0.8" opacity="0.32">
+    <path d="M84 324H108M96 312V336"/>
+    <path d="M424 404H444M434 394V414"/>
+  </g>
+
+  <rect x="32" y="32" width="448" height="448" rx="4" fill="none" stroke="#FFD9E2" stroke-opacity="0.2"/>
+
+  <g opacity="0.22">
+    <path d="M60 512V474M72 512V486M84 512V468M96 512V492M108 512V478M120 512V494M132 512V470M144 512V488" stroke="#FFD9E2" stroke-width="1"/>
+  </g>
+
+  <rect width="512" height="512" filter="url(#grain)" opacity="0.24" style="mix-blend-mode:overlay"/>
+</svg>

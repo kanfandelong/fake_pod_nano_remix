@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>POD NANO — UI Study 01</title>
+  <style>
+    :root {
+      --bg: #08080a;
+      --text: #f4f1ea;
+      --muted: rgba(244, 241, 234, 0.46);
+      --faint: rgba(244, 241, 234, 0.26);
+      --line: rgba(255, 255, 255, 0.09);
+      --accent: #ff7a67;
+      --display: "Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif;
+      --ui: "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--bg); }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(1100px 700px at 78% 12%, rgba(255, 122, 103, 0.11), transparent 63%),
+        radial-gradient(800px 500px at 5% 100%, rgba(111, 122, 255, 0.06), transparent 64%),
+        var(--bg);
+      color: var(--text);
+      font-family: var(--ui);
+      -webkit-font-smoothing: antialiased;
+    }
+    .page {
+      max-width: 1540px;
+      margin: 0 auto;
+      padding: 34px 42px 30px;
+    }
+    .head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .brand { display: flex; align-items: center; gap: 9px; font-weight: 650; }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 14px rgba(255,122,103,.8); }
+    .slash { color: var(--faint); }
+    .meta { color: var(--faint); }
+    .intro {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 30px;
+      padding: 28px 0 24px;
+    }
+    .kicker {
+      display: flex; align-items: center; gap: 9px;
+      color: var(--accent);
+      font-size: 8px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+    }
+    .kicker span { width: 22px; height: 1px; background: currentColor; }
+    h1 {
+      margin: 12px 0 0;
+      font-family: var(--display);
+      font-size: 42px;
+      line-height: 0.98;
+      font-weight: 590;
+      letter-spacing: -0.05em;
+    }
+    .copy {
+      max-width: 370px;
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.55;
+    }
+    .stats {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      padding-bottom: 3px;
+      max-width: 460px;
+    }
+    .stat {
+      padding: 7px 9px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      color: var(--faint);
+      font-size: 8px;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+    }
+    .stat strong { color: rgba(244,241,234,.74); font-weight: 600; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 24px 20px;
+    }
+    .card { min-width: 0; }
+    .frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 28px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.11);
+      background: #050506;
+      box-shadow: 0 24px 50px rgba(0,0,0,.4), 0 0 0 1px rgba(0,0,0,.5);
+    }
+    .frame img { width: 100%; height: 100%; display: block; object-fit: cover; }
+    .caption {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 9px 3px 0;
+    }
+    .label { display: flex; align-items: baseline; gap: 8px; min-width: 0; }
+    .num { color: var(--accent); font-size: 8px; letter-spacing: 0.08em; }
+    .name { font-size: 12px; font-weight: 560; letter-spacing: -0.005em; }
+    .note { color: var(--faint); font-size: 8px; letter-spacing: 0.04em; text-align: right; }
+    .foot {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      margin-top: 28px;
+      padding-top: 13px;
+      border-top: 1px solid var(--line);
+      color: var(--faint);
+      font-size: 8px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    @media (max-width: 1100px) {
+      .page { padding: 24px; }
+      .intro { display: block; }
+      .stats { justify-content: flex-start; margin-top: 16px; }
+      .grid { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 22px 18px; }
+    }
+    @media (max-width: 680px) {
+      .head .meta { display: none; }
+      .intro h1 { font-size: 34px; }
+      .grid { grid-template-columns: 1fr; }
+      .foot { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="head">
+      <div class="brand"><span class="dot"></span>POD NANO <span class="slash">/</span> UI STUDY 01</div>
+      <div class="meta">36 × 36 mm · 460 × 460 · ≈326 ppi · LVGL 9</div>
+    </header>
+
+    <section class="intro">
+      <div>
+        <div class="kicker"><span></span>Touch interface</div>
+        <h1>Pocket sound,<br>sized for fingers.</h1>
+        <p class="copy">An eight-screen study for a two-inch OLED player. Every folder is one playlist made of its direct audio files; nested folders stay independent. Listening stats stay local — no clock or calendar required.</p>
+      </div>
+      <div class="stats">
+        <span class="stat"><strong>12 px</strong> min data text</span>
+        <span class="stat"><strong>58–62 px</strong> list rows</span>
+        <span class="stat"><strong>Folder</strong> = playlist</span>
+        <span class="stat"><strong>No RTC</strong> local stats</span>
+      </div>
+    </section>
+
+    <main class="grid">
+      <article class="card">
+        <div class="frame"><img src="screenshots/01-now.png" alt="Now playing screen"></div>
+        <div class="caption"><div class="label"><span class="num">01</span><span class="name">Now Playing</span></div><span class="note">220 px art · 68 px play</span></div>
+      </article>
+      <article class="card">
+        <div class="frame"><img src="screenshots/02-library.png" alt="Library source list"></div>
+        <div class="caption"><div class="label"><span class="num">02</span><span class="name">Library</span></div><span class="note">sources · default /sdcard/music</span></div>
+      </article>
+      <article class="card">
+        <div class="frame"><img src="screenshots/03-library-folder.png" alt="Folder playlist view"></div>
+        <div class="caption"><div class="label"><span class="num">03</span><span class="name">Folder</span></div><span class="note">direct files only · nested stays separate</span></div>
+      </article>
+      <article class="card">
+        <div class="frame"><img src="screenshots/04-files.png" alt="File manager screen"></div>
+        <div class="caption"><div class="label"><span class="num">04</span><span class="name">Files</span></div><span class="note">browse SD · add library folders</span></div>
+      </article>
+      <article class="card">
+        <div class="frame"><img src="screenshots/06-queue.png" alt="Up next queue screen"></div>
+        <div class="caption"><div class="label"><span class="num">05</span><span class="name">Up Next</span></div><span class="note">folder queue · 62 px rows</span></div>
+      </article>
+      <article class="card">
+        <div class="frame"><img src="screenshots/07-settings.png" alt="Settings screen"></div>
+        <div class="caption"><div class="label"><span class="num">06</span><span class="name">Settings</span></div><span class="note">54 px rows · no clock</span></div>
+      </article>
+      <article class="card">
+        <div class="frame"><img src="screenshots/08-listening.png" alt="Listening statistics screen"></div>
+        <div class="caption"><div class="label"><span class="num">07</span><span class="name">Listening</span></div><span class="note">play counts · no RTC</span></div>
+      </article>
+      <article class="card">
+        <div class="frame"><img src="screenshots/10-menu.png" alt="Menu sheet overlay"></div>
+        <div class="caption"><div class="label"><span class="num">08</span><span class="name">Menu</span></div><span class="note">bottom sheet · quick stats</span></div>
+      </article>
+    </main>
+
+    <footer class="foot">
+      <span>POD NANO / UI STUDY 01 / FOLDER-FIRST INTERACTIVE HTML PROTOTYPE</span>
+      <span>Open ui/index.html · screenshots native 460 × 460</span>
+    </footer>
+  </div>
+</body>
+</html>

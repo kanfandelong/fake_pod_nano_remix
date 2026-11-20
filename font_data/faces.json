@@ -1,0 +1,21 @@
+{
+  "font": "SourceHanSansSC-Normal.otf",
+  "fonts": {
+    "16": "SourceHanSansSC-Normal.otf",
+    "24": "zh-cn.ttf"
+  },
+  "faces": [
+    {
+      "pixel_size": 16,
+      "bpp": 4,
+      "file": "cjk16.bin",
+      "length": 2986088
+    },
+    {
+      "pixel_size": 24,
+      "bpp": 2,
+      "file": "cjk24.bin",
+      "length": 3158468
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+#define TFT_RST 7
+#define TFT_CS 8
+#define TFT_SCK 9
+#define TFT_SDA0 10
+#define TFT_SDA1 11
+#define TFT_SDA2 12
+#define TFT_SDA3 13
+#define TFT_TE 6
+#define BTN_PIN 48
+#define BOOT_PIN 0
+#define I2C_WIRE_SDA 3
+#define I2C_WIRE_SCL 2
+
+#define IMU_INT1 47
+#define TOUCH_PIN_NUM_INT 4
+#define TOUCH_PIN_NUM_RST 5
+
+#define SD_MMC_D0_PIN 15
+#define SD_MMC_D1_PIN 14
+#define SD_MMC_D2_PIN 21
+#define SD_MMC_D3_PIN 18
+#define SD_MMC_CLK_PIN 16
+#define SD_MMC_CMD_PIN 17
+
+#define AUDIO_I2S_MCK_IO -1 // MCK
+#define AUDIO_I2S_BCK_IO 40 // BCK
+#define AUDIO_I2S_WS_IO 38  // LCK
+#define AUDIO_I2S_DO_IO 39  // DIN
+#define CS43131_RST 41
+
+#define BAT_ADC_PIN 1
+
+#define MIC_TYPE_PDM
+#define MIC_I2S_PORT I2S_NUM_0
+#define MIC_PDM_DATA 46
+#define MIC_PDM_SCK 45
+

@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFD08A"/>
+      <stop offset="0.45" stop-color="#FFA06F"/>
+      <stop offset="1" stop-color="#E7495B"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="0.38" cy="0.32" r="0.76">
+      <stop offset="0" stop-color="#FFF8DD"/>
+      <stop offset="0.55" stop-color="#FFE08D"/>
+      <stop offset="1" stop-color="#FF9D57"/>
+    </radialGradient>
+    <linearGradient id="foreground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#CE2F4C"/>
+      <stop offset="1" stop-color="#8E1939"/>
+    </linearGradient>
+    <filter id="soft" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="42"/>
+    </filter>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer>
+        <feFuncA type="table" tableValues="0 0.35"/>
+      </feComponentTransfer>
+    </filter>
+  </defs>
+
+  <rect width="512" height="512" fill="url(#bg)"/>
+  <circle cx="356" cy="196" r="150" fill="url(#sun)"/>
+  <circle cx="356" cy="196" r="195" fill="none" stroke="#FFF3D1" stroke-width="1.2" opacity="0.42"/>
+  <circle cx="356" cy="196" r="230" fill="none" stroke="#FFF3D1" stroke-width="0.8" opacity="0.22"/>
+  <ellipse cx="112" cy="86" rx="170" ry="92" fill="#FFE6A4" opacity="0.55" filter="url(#soft)"/>
+
+  <path d="M-20 382C90 340 200 352 300 384C390 412 460 400 532 360V532H-20Z" fill="url(#foreground)"/>
+  <path d="M-20 416C110 376 220 396 330 426C420 450 480 438 532 412V532H-20Z" fill="#7C1731" opacity="0.52"/>
+
+  <g fill="none" stroke="#FFF3D1" stroke-linecap="round">
+    <path d="M43 168C68 136 109 130 139 158C111 186 72 190 43 168Z" fill="#FFF3D6" fill-opacity="0.46" stroke="none"/>
+    <path d="M62 286C82 270 103 272 119 288" stroke-width="1.1" opacity="0.42"/>
+    <path d="M77 348H107M92 333V363" stroke-width="1.1" opacity="0.68"/>
+  </g>
+  <circle cx="92" cy="348" r="4.5" fill="#FFF0CC"/>
+
+  <rect width="512" height="512" filter="url(#grain)" opacity="0.24" style="mix-blend-mode:overlay"/>
+</svg>
