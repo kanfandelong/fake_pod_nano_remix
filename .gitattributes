@@ -1,0 +1,16 @@
+# The firmware sources are stored and checked out with LF on every platform;
+# this also overrides a global core.autocrlf=true (the Windows default), which
+# would otherwise turn patches and C sources into CRLF in a fresh clone.
+* text=auto eol=lf
+
+# Patches are applied with `git apply` against LF sources, so they must stay
+# byte-exact.
+*.patch text eol=lf
+
+# Explicit binary types, in case a future file has no NUL bytes to sniff.
+*.pdf  binary
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.mp3  binary
+*.bin  binary
